@@ -1,0 +1,48 @@
+/* Returns number of entries in countries table that belong to continent of Africa */
+SELECT COUNT(continent)
+FROM countries
+WHERE continent = 'Africa';
+
+/* Returns sum of population in contintent of Oceania in 2005 */
+SELECT SUM(population_years.population) AS 'population in Oceania in 2005 (millions)'
+FROM countries
+JOIN population_years
+ON countries.id = population_years.country_id
+WHERE countries.continent = 'Oceania' AND
+population_years.year = '2005';
+
+/* Returns average population of countries in South America in 2003 */
+SELECT AVG(population_years.population) AS 'average population of countries in South America in 2003 (millions)'
+FROM countries
+JOIN population_years
+ON countries.id = population_years.country_id
+WHERE countries.continent = 'South America' AND
+population_years.year = '2003';
+
+/* Returns country with smallest population in 2007*/
+SELECT countries.name AS 'country', MIN(population_years.population) AS 'population (millions)'
+FROM countries
+JOIN population_years
+ON countries.id = population_years.country_id
+WHERE population_years.year = '2007';
+
+/* Returns average population of Poland between years 2000 and 2010*/
+SELECT countries.name AS 'country', AVG(population_years.population) AS 'average population(millions)'
+FROM countries
+JOIN population_years
+ON countries.id = population_years.country_id
+
+/* Returns the number of countries with "The" included in their name*/
+SELECT COUNT(DISTINCT countries.name)
+FROM countries
+JOIN population_years
+ON countries.id = population_years.country_id
+WHERE countries.name LIKE '% The%';
+
+/* Returns the total population of each continent in 2010*/
+SELECT SUM(population_years.population) AS 'Population in 2010 (millions)', countries.continent AS 'Continent'
+FROM countries
+JOIN population_years
+ON countries.id = population_years.country_id
+WHERE year = '2010'
+GROUP BY countries.continent;
